@@ -3,7 +3,9 @@ defmodule SeraphoRank.Core.Users do
 
     schema "users" do
         field :name, :string
-        field :points, :integer
+        field :waves, :integer
+        field :minutes, :integer
+        field :bot, :boolean, default: true
         field :email, :string
     end
 
@@ -15,7 +17,9 @@ defmodule SeraphoRank.Core.Users do
     def fields() do
         [
             :name,
-            :points,
+            :waves,
+            :minutes,
+            :bot,
             :email
         ]
     end

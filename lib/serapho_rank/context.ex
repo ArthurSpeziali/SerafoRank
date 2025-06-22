@@ -1,11 +1,13 @@
 defmodule SeraphoRank.Context do
     alias SeraphoRank.Core.Users.Api
+    alias SeraphoRank.Validate
+    alias SeraphoRank.Utils
 
 
 
     def all(params) do
-        size = Map.get(params, "size") || "100"
-            |> valid_int()
+        size = (Map.get(params, "size") || "100")
+            |> Validate.int()
 
         if size do
             cond do
@@ -16,17 +18,16 @@ defmodule SeraphoRank.Context do
                     {:error, "the entrie's limit is 100! (#{size})"}
 
                 true -> 
-                    Api.all_limit(size)
+                    {:ok, querry} = Api.all_limit(size)
+                    {:ok, 
+                        Enum.map(querry, &(Utils.json!(&1)))
+                    }
             end
+        else
+            {:error, "the entrie must be an integer! #{size}"}
         end
 
     end
 
 
-    defp valid_int(str) do
-        case Integer.parse(str) do
-            {int, ""} -> int
-            _ -> false
-        end
-    end
 end

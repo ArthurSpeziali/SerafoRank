@@ -40,7 +40,7 @@ defmodule SeraphoRank.Core.Users.Api do
 
     def all_limit(limit) do
         from(Users)
-        |> order_by(desc: :points)
+        |> order_by(desc: :waves)
         |> limit(^limit)
         |> Repo.all()
 
