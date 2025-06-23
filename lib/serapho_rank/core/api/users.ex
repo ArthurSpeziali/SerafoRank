@@ -48,4 +48,15 @@ defmodule SeraphoRank.Core.Users.Api do
             querry -> {:ok, querry}
         end
     end
+
+    def fields() do
+        [
+            "name",
+            "waves",
+            "minutes",
+            "bot",
+            "cipher",
+            "part"
+        ]
+    end
 end

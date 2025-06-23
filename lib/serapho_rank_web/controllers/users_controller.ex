@@ -23,6 +23,16 @@ defmodule SeraphoRankWeb.UsersController do
 
 
     def rank(conn, params) do
-        response(conn, Context.all(params))
+        response(conn, Context.get(params))
+    end
+
+    def submit(conn, params) do
+        response(conn, Context.post(params))
+    end
+
+
+    def error(conn, _params) do
+        put_status(conn, 404)
+        |> text("Operation is not valid!")
     end
 end
