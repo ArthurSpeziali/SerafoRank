@@ -55,7 +55,7 @@ defmodule SeraphoRank.Core.Users.Api do
         |> Repo.one()
 
         |> case do
-            nil -> {:error, :not found}
+            nil -> {:error, :not_found}
             querry -> {:ok, querry}
         end
     end
