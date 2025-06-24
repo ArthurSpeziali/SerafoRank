@@ -41,7 +41,7 @@ defmodule SeraphoRank.Context do
                 if String.length(name) > 32 do
                     {:error, "the name cannot contain more than 32 characters!"}
                 else
-                    {:ok, querry} = Api.insert(%{name: name, waves: waves, minutes: minutes, bot: bot, email: email})
+                    {:ok, querry} = insert_or_update(%{name: name, waves: waves, minutes: minutes, bot: bot, email: email})
                     {:ok, %{id: querry.id}}
                 end
             else
@@ -56,4 +56,19 @@ defmodule SeraphoRank.Context do
         end
     end
 
+
+    def insert_or_update(params) do
+        IO.inspect(params)
+        cond do  
+            !params[:email] ->
+                Api.insert(params)
+
+            Api.get_email(params[:email]) == {:ok, []} ->
+                Api.insert(params)
+
+            true ->
+                {:ok, querry} = Api.get_email(params[:email])
+                Api.update(querry.id, params)
+        end
+    end
 end

@@ -52,7 +52,7 @@ defmodule SeraphoRank.Core.Users.Api do
     def get_email(email) do
         from(Users)
         |> where(email: ^email)
-        |> Repo.all()
+        |> Repo.one()
 
         |> case do
             querry -> {:ok, querry}
