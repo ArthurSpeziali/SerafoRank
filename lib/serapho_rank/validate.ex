@@ -21,7 +21,7 @@ defmodule SeraphoRank.Validate do
              true <- is_integer(map["waves"]),
              true <- is_integer(map["minutes"]),
              true <- is_boolean(map["bot"]),
-             true <- is_binary(map["key"]),
+             true <- is_binary(map["cipher"]),
              email <- map["email"] || "noone@nohost.com",
              true <- String.printable?(email) do
 

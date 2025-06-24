@@ -30,21 +30,29 @@ defmodule SeraphoRank.Context do
     end
 
     def post(params) do
-        if Validate.fields(params) && Validate.required(params) do
-            %{"name" => name, "waves" => waves, "minutes" => minutes,  "bot" => bot, "cipher" => cipher, "part" => part} = params
+        fields? = Validate.fields(params)
+        if fields? && Validate.required(params) do
+            %{"name" => name, "waves" => waves, "minutes" => minutes,  "bot" => bot, "cipher" => cipher} = params
             email = Map.get(params, "email")
 
             key = name <> Integer.to_string(waves) <> Integer.to_string(minutes) <> Atom.to_string(bot)
-                  |> Encrypter.hash()
 
-            if Encrypter.decrypt(cipher, part, key) == Utils.get_sha256() do
-                {:ok, querry} = Api.insert(%{name: name, waves: waves, minutes: minutes, email: email})
-                {:ok, %{id: querry.id}}
+            if Encrypter.decrypt(cipher, key) != Utils.get_sha256() do
+                if String.length(name) > 32 do
+                    {:error, "the name cannot contain more than 32 characters!"}
+                else
+                    {:ok, querry} = Api.insert(%{name: name, waves: waves, minutes: minutes, bot: bot, email: email})
+                    {:ok, %{id: querry.id}}
+                end
             else
                 {:error, "the encryption is invalid or has been compromised!"}
             end
         else 
-            {:error, "the body needs to have entire required params! (#{Api.fields() |> Enum.join(", ")})"}
+            if fields? do
+                {:error, "the body needs to have entire valid params! (#{Api.fields() |> Enum.join(", ")})"}
+            else
+                {:error, "some field is invalid!"}
+            end
         end
     end
 

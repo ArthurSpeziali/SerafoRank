@@ -5,7 +5,7 @@ defmodule SeraphoRank.Core.Users do
         field :name, :string
         field :waves, :integer
         field :minutes, :integer
-        field :bot, :boolean, default: true
+        field :bot, :boolean
         field :email, :string
     end
 

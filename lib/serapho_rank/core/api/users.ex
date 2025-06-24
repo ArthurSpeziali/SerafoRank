@@ -49,14 +49,24 @@ defmodule SeraphoRank.Core.Users.Api do
         end
     end
 
+    def get_email(email) do
+        from(Users)
+        |> where(email: ^email)
+        |> Repo.all()
+
+        |> case do
+            querry -> {:ok, querry}
+        end
+    end
+
+
     def fields() do
         [
             "name",
             "waves",
             "minutes",
             "bot",
-            "cipher",
-            "part"
+            "cipher"
         ]
     end
 end
