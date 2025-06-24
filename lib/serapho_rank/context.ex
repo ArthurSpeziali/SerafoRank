@@ -58,16 +58,13 @@ defmodule SeraphoRank.Context do
 
 
     def insert_or_update(params) do
-        IO.inspect(params)
-        cond do  
-            !params[:email] ->
+        {:ok, querry} = Api.get_email(params[:email] || "noone@nohost.com")
+
+        case querry do  
+            [] ->
                 Api.insert(params)
 
-            Api.get_email(params[:email]) == {:ok, []} ->
-                Api.insert(params)
-
-            true ->
-                {:ok, querry} = Api.get_email(params[:email])
+            {:error, _reason} ->
                 Api.update(querry.id, params)
         end
     end
