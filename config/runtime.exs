@@ -29,7 +29,6 @@ if config_env() == :prod do
       """
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-
   config :serapho_rank, SeraphoRank.Repo,
     # ssl: true,
     url: database_url,
@@ -48,7 +47,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  host = System.get_env("FLY_APP_NAME") <> ".fly.dev"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :serapho_rank, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")

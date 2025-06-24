@@ -37,7 +37,7 @@ defmodule SeraphoRank.Context do
 
             key = name <> Integer.to_string(waves) <> Integer.to_string(minutes) <> Atom.to_string(bot)
 
-            if Encrypter.decrypt(cipher, key) != Utils.get_sha256() do
+            if Encrypter.decrypt(cipher, key) == Utils.get_sha256() do
                 if String.length(name) > 32 do
                     {:error, "the name cannot contain more than 32 characters!"}
                 else
