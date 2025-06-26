@@ -7,6 +7,6 @@ defmodule SeraphoRank.Utils do
     end
 
     def get_sha256() do
-        "4608529b6779db8fa72f3e33c59b3f17a6a11d1e3bec16b349cf88874f1de0f6"
+        "e43c7b56f6397a8622caeeb9b21689f1424d51353ae7eb205f573cccf07ce157"
     end
 end
