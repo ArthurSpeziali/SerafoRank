@@ -47,7 +47,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("FLY_APP_NAME") <> ".fly.dev"
+  host = System.get_env("RAILWAY_PRIVATE_DOMAIN")
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :serapho_rank, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
